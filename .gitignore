@@ -1,0 +1,7 @@
+.dist
+dist
+
+# plugins with npm packages - Fusejs is used by Cum Zone
+node_modules
+.pnpm-debug.log
+pnpm-lock.yaml
