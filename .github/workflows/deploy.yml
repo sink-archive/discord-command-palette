@@ -2,7 +2,9 @@ name: Build and deploy
 
 on:
     push:
-        branches: [master]
+        branches: [src-cumcord]
+    
+    workflow_dispatch:
 
 jobs:
     deploy:
