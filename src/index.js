@@ -12,7 +12,6 @@ import { nests } from "@cumcord/modules/internal";
 export default ({ persist, id }) => {
     // initialise nest
     persist.store.customEntries = [];
-    if (!persist.ghost.usageCounts) persist.store.usageCounts = new Map();
     if (!persist.ghost.keyBind)
         persist.store.keyBind = {
             ctrlMeta: true,

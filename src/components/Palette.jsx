@@ -1,3 +1,5 @@
+import { persist } from "@cumcord/pluginData";
+
 import { findByProps, findByDisplayName } from "@cumcord/modules/webpack";
 import { ErrorBoundary } from "@cumcord/ui/components";
 import PaletteItem from "./PaletteItem.jsx";
@@ -10,21 +12,14 @@ const { openModal } = findByProps("openModalLazy");
 const ModalComponents = findByProps("ModalCloseButton");
 const TextInput = findByDisplayName("TextInput");
 
-const Component = ({
-    e,
-    prompt,
-    nest,
-    defaultEntries,
-    closeAction,
-    markdown,
-}) => {
+const Component = ({ e, prompt, nest, entries, closeAction, markdown }) => {
     let [searchterm, setSearchterm] = useState("");
     let [selected, setSelected] = useState(0);
 
-    let rawEntries = nest
-        ? defaultEntries.concat(nest.ghost.customEntries)
-        : defaultEntries;
-    let usageMap = nest ? nest.ghost.usageCounts : new Map();
+    let rawEntries = nest ? entries.concat(nest.ghost.customEntries) : entries;
+    let usageMap = persist?.ghost?.usageCounts
+        ? persist.ghost.usageCounts
+        : new Map();
 
     let entries = [];
     try {
@@ -41,12 +36,13 @@ const Component = ({
         e.onClose();
         // increment usages count (helps with ranking entries)
         let entry = entries[selected];
-        if (nest) {
-            let usages = nest.ghost.usageCounts;
+        if (entry.id) {
+            let usages = persist.ghost.usageCounts;
             let currentUsage = usages.get(entry.id) ?? 0;
             usages.set(entry.id, currentUsage + 1);
-            nest.store.usageCounts = usages;
+            persist.store.usageCounts = usages;
         }
+
         // run entry action
         entry.action();
     };
@@ -120,11 +116,9 @@ const Component = ({
     );
 };
 
-let openPalette = (prompt, nest, defaultEntries, markdown, closeAction) =>
+let openPalette = (prompt, nest, entries, markdown, closeAction) =>
     openModal((e) => (
-        <Component
-            {...{ e, prompt, nest, defaultEntries, closeAction, markdown }}
-        />
+        <Component {...{ e, prompt, nest, entries, closeAction, markdown }} />
     ));
 
 let openPalettePromisified = (prompt, entries, markdown) =>
@@ -132,11 +126,13 @@ let openPalettePromisified = (prompt, entries, markdown) =>
         openPalette(
             prompt,
             null,
-            entries.map((entry) => {
-                return { label: entry, action: () => resolve(entry) };
-            }),
+            entries.map((entry) => ({
+                // do not set an id, so usage counts are not tracked
+                label: entry,
+                action: () => resolve(entry),
+            })),
             markdown,
-            () => reject("user closed palette")
+            () => reject()
         );
     });
 
