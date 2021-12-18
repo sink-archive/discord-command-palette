@@ -33,22 +33,23 @@ ${noIdCustom.map((e) => e.label).join("\n")}
 };
 
 const rankResults = (set, usageCounts) => {
+    let remaining = set.slice();
     let working = [];
 
     // add all with usage counts
     usageCounts.forEach((count, id) => {
-        let index = set.findIndex((entry) => entry.id == id);
+        let index = remaining.findIndex((entry) => entry.id == id);
         if (index == -1) return;
 
-        working.push([set[index], count]);
-        set.splice(index, 1);
+        working.push([remaining[index], count]);
+        remaining.splice(index, 1);
     });
 
     // sort by count and remove now useless count
     working = working.sort((a, b) => b[1] - a[1]).map((n) => n[0]);
 
     // add rest of set on the end
-    return working.concat(set);
+    return working.concat(remaining);
 };
 
 const filter = (set, searchTerm) => {

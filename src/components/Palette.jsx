@@ -43,18 +43,18 @@ const Component = ({ e, prompt, rawEntries, closeAction, markdown }) => {
     };
 
     const keyHandler = (k) => {
-        switch (k.which) {
-            case 38:
+        switch (k.code) {
+            case "ArrowUp":
                 if (selected > 0) setSelected(selected - 1);
                 else setSelected(entries.length - 1);
                 break;
 
-            case 40:
+            case "ArrowDown":
                 if (selected < entries.length - 1) setSelected(selected + 1);
                 else setSelected(0);
                 break;
 
-            case 13:
+            case "Enter":
                 finish();
                 break;
 
