@@ -6,25 +6,19 @@ Command Palette exposes an API globally designed to make it as easy as possible 
 and build custom pickers and text prompts.
 
 It attaches an object to window: _`window.commandPalette`_,
-and you can easily test for the existence of Command Palette in your plugin before you try to use it with the following:
-
-```js
-// yep, it's that easy
-if (window.commandPalette) {
-    // register custom entries etc
-}
-```
+and while testing for it should be fairly easy, it is preferable to use the provided code in
+[depend.js](https://github.com/yellowsink/discord-command-palette/blob/src-cumcord/depend.js)
 
 ## The type used for entries
 
 ```ts
 type entry = {
-    id: string,
-    icon: ?string,
-    label: string,
-    source: string,
-    condition: ?(() => bool),
-    action: () => void,
+    id: string;
+    icon: ?string;
+    label: string;
+    source: string;
+    condition: ?(() => bool);
+    action: () => void;
 };
 ```
 
@@ -44,10 +38,12 @@ If left undefined or null, then the entry will always render.
 The action is a function that will be run whenever your action is picked.
 
 ## `openPalette()`
+
 ```ts
 (prompt: string,
-entries: entry[],
-markdown: ?string):
+rawEntries: entry[],
+markdown: ?string
+closeAction: ?(() => void)):
 void
 ```
 
@@ -58,6 +54,7 @@ It takes a prompt that may be null to default to "Search Actions", and a list of
 It also takes an optional string of markdown which will be shown above the search box for context.
 
 ## `openPaletteAsync()`
+
 ```ts
 (prompt: string,
 entries: string[],
@@ -71,6 +68,7 @@ The promise will be resolved once an item is picked, or rejected if the palette 
 If you are `await`ing the function, make sure to `try {} catch {}` in case the user closes the palette instead of picking.
 
 ## `openTextEntry()`
+
 ```ts
 (prompt: string,
 finishAction: (string) => void,
@@ -83,6 +81,7 @@ void
 It also takes an optional string of markdown which will be shown above the search box for context.
 
 ## `openTextEntryAsync()`
+
 ```ts
 (prompt: string,
 markdown: ?string):
@@ -95,6 +94,7 @@ The promise will be resolved once text is entered, or rejected if the textentry 
 If you are `await`ing the function, make sure to `try {} catch {}` in case the user closes the textentry instead of picking.
 
 ## `registerEntry()`
+
 ```ts
 (source: string,
 id: string,
@@ -114,6 +114,7 @@ The label is the text to be shown in the action list.
 The action is a function to run if your entry is picked.
 
 ## `unregisterEntry()`
+
 ```ts
 (source: string,
 id: string):
@@ -123,6 +124,7 @@ entry
 `unregisterEntry` will remove the entry of the specified ID and source, and then return the removed entry.
 
 ## `unregisterSource()`
+
 ```ts
 (source: string):
 void
@@ -134,6 +136,7 @@ This is very useful when you unpatch your function, to automatically remove all 
 It returns the list of removed entries, or `undefined` if none.
 
 ## `getEntries()`
+
 ```ts
 (): entry[]
 ```
