@@ -121,7 +121,7 @@ let openPalettePromisified = (prompt, entries, markdown) =>
         openPalette(
             prompt,
             entries.map((entry) => ({
-                // do not set an id, so usage counts are not tracked
+                id: entry,
                 label: entry,
                 action: () => resolve(entry),
             })),
