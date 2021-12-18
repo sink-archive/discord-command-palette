@@ -5,3 +5,9 @@
 Redefine how you use your client.
 
 [Docs](https://yellowsink.github.io/discord-command-palette/docs)
+
+<!-- <a target="_blank" href="https://send.cumcord.com/#https://cumcordplugins.github.io/Condom/yellowsink.github.io/discord-command-palette"><img height="50" src="https://yellowsink.github.io/cc-plugins/assets/condom_button.png" /></a>
+
+<details><summary>Install from source</summary> -->
+<a target="_blank" href="https://send.cumcord.com/#https://yellowsink.github.io/discord-command-palette"><img height="50" src="https://yellowsink.github.io/cc-plugins/assets/cumdump_button.png" /></a>
+<!-- </details> -->
