@@ -1,0 +1,48 @@
+name: Build and deploy
+
+on:
+    push:
+        branches: [master]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Prepare environment
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "16"
+
+            - run: npm i -g sperm
+
+            - name: Build plugin
+              run: |
+                  mkdir .dist
+                  cd src
+                  npm i
+                  sperm build --outdir "../.dist"
+
+              # Foolproof feature:
+              # - Copies over README so that the root of the deployed website shows it
+              # - Changes 404 page to README so that you don't get lost while clicking links
+              # If you remove this step then you should probably remove the enable_jekyll option in the next one
+            #- name: Copy additional files
+            #  run: |
+            #      cp -r assets .dist
+            #      cp README.md .dist/README.md
+            #      cp palette-docs.md .dist/palette-docs.md
+            #      printf -- "---\npermalink: /404.html\n---\n" > .dist/404.md
+            #      printf -- "> **Note:** You accessed a link that returned a 404, probably by clicking one of the plugin links. You're supposed to copy the link address and add it into Cumcord.\n\n" >> .dist/404.md
+            #      cat README.md >> .dist/404.md
+
+              # Documentation: https://github.com/peaceiris/actions-gh-pages
+            - name: Deploy to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./.dist
+                  # Makes it so the md files in the previous step get processed by GitHub Pages
+                  enable_jekyll: false #true
