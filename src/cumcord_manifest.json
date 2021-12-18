@@ -3,5 +3,6 @@
   "description": "Like vscode's command palette? Well now it's in Discord too!!!",
   "author": "Yellowsink",
   "file": "index.js",
-  "license": "BSD-3"
+  "license": "BSD-3",
+  "media": "https://yellowsink.github.io/discord-command-palette/assets/icon.png"
 }
