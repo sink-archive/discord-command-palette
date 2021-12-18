@@ -17,7 +17,7 @@ export default (defaultEntries) => {
             e.which == bind.code;
 
         if (correctBind) {
-            let md = persist.ghost.firstRun ? welcomeMsg : null;
+            let md = (persist.ghost.firstRun !== false) ? welcomeMsg : null;
             openPalette(null, defaultEntries.concat(state.ghost.customEntries), md);
             persist.store.firstRun = false;
         }

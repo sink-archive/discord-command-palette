@@ -40,11 +40,7 @@ The action is a function that will be run whenever your action is picked.
 ## `openPalette()`
 
 ```ts
-(prompt: string,
-rawEntries: entry[],
-markdown: ?string
-closeAction: ?(() => void)):
-void
+(prompt: string, rawEntries: entry[], markdown: ?string closeAction: ?(() => void)): void
 ```
 
 `openPalette` opens a completely custom palette supporting all features.
@@ -56,10 +52,7 @@ It also takes an optional string of markdown which will be shown above the searc
 ## `openPaletteAsync()`
 
 ```ts
-(prompt: string,
-entries: string[],
-markdown: ?string):
-Promise<string>
+(prompt: string, entries: string[], markdown: ?string): Promise<string>
 ```
 
 `openPaletteAsync` opens a palette that behaves as a searchable picker panel, displaying the custom prompt, and allowing the user to pick a string.
@@ -70,10 +63,7 @@ If you are `await`ing the function, make sure to `try {} catch {}` in case the u
 ## `openTextEntry()`
 
 ```ts
-(prompt: string,
-finishAction: (string) => void,
-markdown: ?string):
-void
+(prompt: string, finishAction: (string) => void, markdown: ?string): void
 ```
 
 `openTextEntry` opens a text prompt, and if the user submits, will call `finishAction` with the entered text.
@@ -83,9 +73,7 @@ It also takes an optional string of markdown which will be shown above the searc
 ## `openTextEntryAsync()`
 
 ```ts
-(prompt: string,
-markdown: ?string):
-Promise<string>
+(prompt: string, markdown: ?string): Promise<string>
 ```
 
 `openTextEntry` opens a text prompt.
@@ -96,13 +84,7 @@ If you are `await`ing the function, make sure to `try {} catch {}` in case the u
 ## `registerEntry()`
 
 ```ts
-(source: string,
-id: string,
-label: string,
-icon: ?string,
-action: () => void,
-condition: ?(() => bool)):
-void
+(entry): void
 ```
 
 `registerEntry` registers a custom entry into the default keybound command palette.
@@ -116,18 +98,15 @@ The action is a function to run if your entry is picked.
 ## `unregisterEntry()`
 
 ```ts
-(source: string,
-id: string):
-entry
+(id: string): entry
 ```
 
-`unregisterEntry` will remove the entry of the specified ID and source, and then return the removed entry.
+`unregisterEntry` will remove the entry of the specified ID, and then return the removed entry.
 
 ## `unregisterSource()`
 
 ```ts
-(source: string):
-void
+(source: string): void
 ```
 
 `unregisterSource` unregisters every entry connected to a given source.

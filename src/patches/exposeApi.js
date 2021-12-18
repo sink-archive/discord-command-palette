@@ -13,11 +13,10 @@ export default () => {
 
         openPaletteAsync: openPalettePromisified,
 
-        openTextEntry: (prompt, finishAction, markdown) =>
-            openTextEntry(prompt, finishAction),
+        openTextEntry,
         openTextEntryAsync: openTextEntryPromise,
 
-        registerEntry(source, id, label, icon, action, condition) {
+        registerEntry({ source, id, label, icon, action, condition }) {
             // make sure people supply all required items
             if (!id || id == "")
                 throw "Register failed: Please supply an ID (string) for your entry";
@@ -47,21 +46,15 @@ export default () => {
             });
         },
 
-        unregisterEntry(source, id) {
+        unregisterEntry(id) {
             // make sure people supply all required items
             if (!id || id == "")
                 throw "Unregister failed: Please supply an ID (string) to deregister";
-            // asking for this is the barebones crappiest measure to stop you removing others' entries
-            if (!source || source == "")
-                throw "Unregister failed: Please identify your source (string)";
 
             let entries = state.ghost.customEntries;
             let index = entries.findIndex((e) => e.id == id);
             if (index == -1)
                 throw "Unregister failed: No entry with that ID could be found";
-
-            if (entries[index].source != source)
-                throw "Unregister failed: An entry with that ID was found, but was not from your source";
 
             let removedEntry = entries[index];
             entries.splice(index, 1);
