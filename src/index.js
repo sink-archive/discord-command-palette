@@ -1,3 +1,5 @@
+import pluginData from "@cumcord/pluginData";
+
 import injectCss from "./styles.sass";
 import keybindPatch from "./patches/keybind.js";
 import paletteEntries from "./paletteEntries.js";
@@ -18,12 +20,12 @@ export default ({ persist, id }) => {
             code: 80,
         };
 
-    let stateNest = nests.make({ pickingBind: false });
+    pluginData.state = nests.make({ pickingBind: false });
 
     // load patches
     let patches = [
         injectCss(),
-        keybindPatch(stateNest, paletteEntries),
+        keybindPatch(paletteEntries),
         exposeApiPatch(),
     ];
 
@@ -36,6 +38,6 @@ export default ({ persist, id }) => {
             patches.forEach((unpatch) => unpatch());
         },
 
-        settings: React.createElement(Settings, { persist, stateNest }),
+        settings: React.createElement(Settings),
     };
 };
