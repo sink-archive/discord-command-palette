@@ -18,38 +18,29 @@ const Component = ({
     closeAction,
     markdown,
 }) => {
-    let [state, setState] = useState({
-        selected: 0,
-        search: "",
-    });
+    let [searchterm, setSearchterm] = useState("");
+    let [selected, setSelected] = useState(0);
 
     let rawEntries = nest
         ? defaultEntries.concat(nest.ghost.customEntries)
         : defaultEntries;
     let usageMap = nest ? nest.ghost.usageCounts : new Map();
 
-    const setSearch = (s) => {
-        let selected = state.selected;
-        setState({ selected, search: s });
-    };
-    const setIndex = (i) => {
-        let search = state.search;
-        setState({ selected: i, search });
-    };
-
     let entries = [];
     try {
-        entries = search(rawEntries, usageMap, state.search);
+        entries = search(rawEntries, usageMap, searchterm).filter(
+            (entry) => entry && (entry.condition?.() ?? true)
+        );
     } catch (err) {
-        setSearch("");
+        setSearchterm("");
         showErrorModal(err);
     }
-    
+
     const finish = () => {
         // close modal
         e.onClose();
         // increment usages count (helps with ranking entries)
-        let entry = entries[state.selected];
+        let entry = entries[selected];
         if (nest) {
             let usages = nest.ghost.usageCounts;
             let currentUsage = usages.get(entry.id) ?? 0;
@@ -63,14 +54,13 @@ const Component = ({
     const keyHandler = (k) => {
         switch (k.which) {
             case 38:
-                if (state.selected > 0) setIndex(state.selected - 1);
-                else setIndex(entries.length - 1);
+                if (selected > 0) setSelected(selected - 1);
+                else setSelected(entries.length - 1);
                 break;
 
             case 40:
-                if (state.selected < entries.length - 1)
-                    setIndex(state.selected + 1);
-                else setIndex(0);
+                if (selected < entries.length - 1) setSelected(selected + 1);
+                else setSelected(0);
                 break;
 
             case 13:
@@ -85,7 +75,7 @@ const Component = ({
         }
 
         document
-            .getElementById(`palette_item_${state.selected}`)
+            .getElementById(`palette_item_${selected}`)
             ?.scrollIntoView(false);
     };
 
@@ -107,27 +97,22 @@ const Component = ({
                             className="ysink_palette_input"
                             placeholder={prompt ?? "Search Actions"}
                             type="text"
-                            value={state.search}
-                            onChange={(e) => setSearch(e)}
+                            value={searchterm}
+                            onChange={(e) => setSearchterm(e)}
                         />
                     </div>
 
                     <div className="ysink_palette_scrollcontainer">
-                        {entries
-                            .filter(
-                                (entry) =>
-                                    entry && (entry.condition?.() ?? true)
-                            )
-                            .map((entry, index) => (
-                                <PaletteItem
-                                    entry={entry}
-                                    id={`palette_item_${index}`}
-                                    selected={index == state.selected}
-                                    icon={entry.icon}
-                                    hover={() => setIndex(index)}
-                                    finish={finish}
-                                />
-                            ))}
+                        {entries.map((entry, index) => (
+                            <PaletteItem
+                                entry={entry}
+                                id={`palette_item_${index}`}
+                                selected={index == selected}
+                                icon={entry.icon}
+                                hover={() => setSelected(index)}
+                                finish={finish}
+                            />
+                        ))}
                     </div>
                 </ModalComponents.ModalContent>
             </ModalComponents.ModalRoot>
