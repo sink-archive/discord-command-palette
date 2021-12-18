@@ -33,7 +33,7 @@ jobs:
               # If you remove this step then you should probably remove the enable_jekyll option in the next one
             - name: Copy additional files
               run: |
-                  #cp -r assets .dist
+                  cp -r assets .dist
                   cp -r docs .dist
                   cp README.md .dist/README.md
                   printf -- "---\npermalink: /404.html\n---\n" > .dist/404.md
@@ -47,4 +47,4 @@ jobs:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: ./.dist
                   # Makes it so the md files in the previous step get processed by GitHub Pages
-                  enable_jekyll: false #true
+                  enable_jekyll: true
