@@ -9,12 +9,10 @@ const { openUserProfileModal } = findByProps("openUserProfileModal");
 const openUserSettings = find((m) => m?.default?.open).default.open;
 const { UserSettingsSections } = findByProps("UserSettingsSections");
 
-const source = "Built In";
 const icon = "🚀";
 
 export default [
     {
-        source,
         icon,
         id: "navigate_user_profile_id",
         label: "Open user profile by ID",
@@ -34,7 +32,6 @@ export default [
         },
     },
     {
-        source,
         icon,
         id: "navigate_user_profile_server",
         label: "Open user profile from current server",
@@ -65,7 +62,6 @@ export default [
         },
     },
     {
-        source,
         icon,
         id: "navigate_user_settings",
         label: "Open user settings",

@@ -6,12 +6,10 @@ import { toggleDevMode } from "@cumcord/dev";
 import textEntry from "../components/TextEntryPalette.jsx";
 import openPalette from "../components/Palette.jsx";
 
-const source = "Built In";
 const icon = "💧";
 
 export default [
     {
-        source,
         icon,
         id: "cumcord_installplug",
         label: "Install plugin from URL",
@@ -27,7 +25,6 @@ export default [
         },
     },
     {
-        source,
         icon,
         id: "cumcord_removeplug",
         label: "Remove plugin",
@@ -49,7 +46,6 @@ export default [
         },
     },
     {
-        source,
         icon,
         id: "cumcord_toggleplug",
         label: "Toggle plugin",
@@ -73,7 +69,6 @@ export default [
         },
     },
     {
-        source,
         icon,
         id: "cumcord_uninject",
         label: "Uninject Cumcord",
@@ -94,7 +89,6 @@ export default [
     },
 
     {
-        source,
         icon,
         id: "cumcord_toggle_dev",
         label: "Toggle DevMode",

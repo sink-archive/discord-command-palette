@@ -6,8 +6,15 @@ import misc from "./builtInEntries/misc.js";
 
 const source = "Built In";
 
-const entries = moderation.concat(cumcord).concat(reboots).concat(navigation).concat(misc);
-
+const entries = moderation
+    .concat(cumcord)
+    .concat(reboots)
+    .concat(navigation)
+    .concat(misc)
+    .map((e) => ({
+        source,
+        ...e,
+    }));
 export default entries;
 
 export { entries, source as builtInSource };

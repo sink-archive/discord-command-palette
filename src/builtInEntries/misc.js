@@ -9,11 +9,8 @@ const { getChannelId } = findByProps("getChannelId", "getVoiceChannelId");
 const { updateGuildNotificationSettings } = findByProps("updateGuildNotificationSettings");
 const { isMuted } = findByProps("getMuteConfig")
 
-const source = "Built In";
-
 export default [
     {
-        source,
         icon: "🔇",
         id: "misc_toggle_channel_mute",
         label: "Toggle current channel mute",
@@ -28,7 +25,6 @@ export default [
         },
     },
     {
-        source,
         icon: "🔇",
         id: "misc_toggle_guild_mute",
         label: "Toggle current guild mute",

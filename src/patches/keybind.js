@@ -18,7 +18,7 @@ export default (defaultEntries) => {
 
         if (correctBind) {
             let md = persist.ghost.firstRun ? welcomeMsg : null;
-            openPalette(null, persist, defaultEntries, md);
+            openPalette(null, defaultEntries.concat(state.ghost.customEntries), md);
             persist.store.firstRun = false;
         }
     };

@@ -1,4 +1,4 @@
-import pluginData from "@cumcord/pluginData";
+import data from "@cumcord/pluginData";
 
 import injectCss from "./styles.sass";
 import keybindPatch from "./patches/keybind.js";
@@ -6,12 +6,11 @@ import paletteEntries from "./paletteEntries.js";
 import exposeApiPatch from "./patches/exposeApi.js";
 
 import Settings from "./Settings";
-import React from "@cumcord/modules/common/React";
+import { createElement } from "@cumcord/modules/common/React";
 import { nests } from "@cumcord/modules/internal";
 
 export default ({ persist, id }) => {
-    // initialise nest
-    persist.store.customEntries = [];
+    // init persist
     if (!persist.ghost.keyBind)
         persist.store.keyBind = {
             ctrlMeta: true,
@@ -19,24 +18,15 @@ export default ({ persist, id }) => {
             code: 80,
         };
 
-    pluginData.state = nests.make({ pickingBind: false });
+    // init state
+    data.state = nests.make({ pickingBind: false, customEntries: [] });
 
     // load patches
-    let patches = [
-        injectCss(),
-        keybindPatch(paletteEntries),
-        exposeApiPatch(),
-    ];
+    const patches = [injectCss(), keybindPatch(paletteEntries), exposeApiPatch()];
 
-    // remove patches and reset custom entries
+    // remove patches
     return {
-        onLoad() {},
-        onUnload() {
-            persist.store.customEntries = [];
-            delete persist.store.customEntries;
-            patches.forEach((unpatch) => unpatch());
-        },
-
-        settings: React.createElement(Settings),
+        onUnload: () => patches.forEach((unpatch) => unpatch()),
+        settings: createElement(Settings),
     };
 };

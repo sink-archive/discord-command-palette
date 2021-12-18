@@ -6,12 +6,10 @@ const { getMembers } = findByProps("getMembers");
 const { getUser } = findByProps("getUser");
 const { banUser, kickUser } = findByProps("banUser");
 
-const source = "Built In";
 const icon = "🛠";
 
 export default [
     {
-        source,
         icon,
         id: "moderation_banuser",
         label: "Ban user from current guild",
@@ -44,7 +42,6 @@ export default [
         },
     },
     {
-        source,
         icon,
         id: "moderation_kickuser",
         label: "Kick user from current guild",

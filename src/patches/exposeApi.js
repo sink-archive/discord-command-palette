@@ -1,4 +1,4 @@
-import { persist } from "@cumcord/pluginData";
+import { state } from "@cumcord/pluginData";
 import { log } from "@cumcord/utils/logger";
 import { entries as builtInEntries, builtInSource } from "../paletteEntries.js";
 import { openPalette, openPalettePromisified } from "../components/Palette.jsx";
@@ -9,9 +9,7 @@ import {
 
 export default () => {
     window.commandPalette = {
-        openPalette: (prompt, entries, markdown) => {
-            openPalette(prompt, null, entries, markdown);
-        },
+        openPalette,
 
         openPaletteAsync: openPalettePromisified,
 
@@ -35,11 +33,11 @@ export default () => {
             // don't let people take existing IDs
             if (builtInEntries.find((e) => e.id == id) != undefined)
                 throw "Register failed: Entry ID taken by a built in entry";
-            let index = persist.ghost.customEntries.findIndex((e) => e.id == id);
+            let index = state.ghost.customEntries.findIndex((e) => e.id == id);
             if (index != -1)
-                throw `Register failed: Entry ID taken by entry from source ${persist.ghost.customEntries[index].source}`;
+                throw `Register failed: Entry ID taken by entry from source ${state.ghost.customEntries[index].source}`;
 
-            persist.ghost.customEntries.push({
+            state.ghost.customEntries.push({
                 id,
                 source,
                 label,
@@ -57,7 +55,7 @@ export default () => {
             if (!source || source == "")
                 throw "Unregister failed: Please identify your source (string)";
 
-            let entries = persist.ghost.customEntries;
+            let entries = state.ghost.customEntries;
             let index = entries.findIndex((e) => e.id == id);
             if (index == -1)
                 throw "Unregister failed: No entry with that ID could be found";
@@ -67,19 +65,19 @@ export default () => {
 
             let removedEntry = entries[index];
             entries.splice(index, 1);
-            persist.store.customEntries = entries;
+            state.store.customEntries = entries;
             return removedEntry;
         },
 
         unregisterSource(source) {
-            let entries = persist.ghost.customEntries;
+            let entries = state.ghost.customEntries;
             let notSourceEntries = entries.filter((e) => e.source != source);
             if (notSourceEntries.length == entries.length) return undefined;
-            persist.store.customEntries = notSourceEntries;
+            state.store.customEntries = notSourceEntries;
             return entries.filter((e) => e.source == source);
         },
 
-        getEntries: () => builtInEntries.concat(persist.ghost.customEntries),
+        getEntries: () => builtInEntries.concat(state.ghost.customEntries),
     };
 
     log("|| COMMAND PALETTE || Initialised window.commandPalette API");

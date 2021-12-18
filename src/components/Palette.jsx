@@ -12,11 +12,10 @@ const { openModal } = findByProps("openModalLazy");
 const ModalComponents = findByProps("ModalCloseButton");
 const TextInput = findByDisplayName("TextInput");
 
-const Component = ({ e, prompt, nest, entries, closeAction, markdown }) => {
+const Component = ({ e, prompt, rawEntries, closeAction, markdown }) => {
     let [searchterm, setSearchterm] = useState("");
     let [selected, setSelected] = useState(0);
 
-    let rawEntries = nest ? entries.concat(nest.ghost.customEntries) : entries;
     let usageMap = persist?.ghost?.usageCounts
         ? persist.ghost.usageCounts
         : new Map();
@@ -116,9 +115,9 @@ const Component = ({ e, prompt, nest, entries, closeAction, markdown }) => {
     );
 };
 
-let openPalette = (prompt, nest, entries, markdown, closeAction) =>
+let openPalette = (prompt, rawEntries, markdown, closeAction) =>
     openModal((e) => (
-        <Component {...{ e, prompt, nest, entries, closeAction, markdown }} />
+        <Component {...{ e, prompt, rawEntries, closeAction, markdown }} />
     ));
 
 let openPalettePromisified = (prompt, entries, markdown) =>
