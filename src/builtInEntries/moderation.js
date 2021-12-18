@@ -17,7 +17,6 @@ export default [
         action: async () => {
             openPalette(
                 "Which user to ban?",
-                null,
                 await Promise.all(
                     getMembers(getGuildId()).map(async (member) => {
                         let user = await getUser(member.userId);
@@ -49,7 +48,6 @@ export default [
         action: async () => {
             openPalette(
                 "Which user to kick?",
-                null,
                 await Promise.all(
                     getMembers(getGuildId()).map(async (member) => {
                         let user = await getUser(member.userId);

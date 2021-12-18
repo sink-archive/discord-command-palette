@@ -17,6 +17,9 @@ export default ({ persist, id }) => {
             shift: true,
             code: 80,
         };
+    
+    if (!persist.ghost.usageCounts)
+        persist.store.usageCounts = new Map();
 
     // init state
     data.state = nests.make({ pickingBind: false, customEntries: [] });

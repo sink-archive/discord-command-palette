@@ -38,7 +38,6 @@ export default [
         action: async () => {
             openPalette(
                 "Which profile to open?",
-                null,
                 await Promise.all(
                     getMembers(getGuildId()).map(async (member) => {
                         let user = await getUser(member.userId);
@@ -68,7 +67,6 @@ export default [
         action: () => {
             openPalette(
                 "Which section to open?",
-                null,
                 Object.values(UserSettingsSections).map((val) => ({
                     id: val,
                     label: val,

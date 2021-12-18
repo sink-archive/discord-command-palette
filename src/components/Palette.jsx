@@ -16,13 +16,9 @@ const Component = ({ e, prompt, rawEntries, closeAction, markdown }) => {
     let [searchterm, setSearchterm] = useState("");
     let [selected, setSelected] = useState(0);
 
-    let usageMap = persist?.ghost?.usageCounts
-        ? persist.ghost.usageCounts
-        : new Map();
-
     let entries = [];
     try {
-        entries = search(rawEntries, usageMap, searchterm).filter(
+        entries = search(rawEntries, persist.ghost.usageCounts, searchterm).filter(
             (entry) => entry && (entry.condition?.() ?? true)
         );
     } catch (err) {
@@ -124,7 +120,6 @@ let openPalettePromisified = (prompt, entries, markdown) =>
     new Promise((resolve, reject) => {
         openPalette(
             prompt,
-            null,
             entries.map((entry) => ({
                 // do not set an id, so usage counts are not tracked
                 label: entry,

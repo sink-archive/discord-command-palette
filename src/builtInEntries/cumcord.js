@@ -36,7 +36,6 @@ export default [
 
             openPalette(
                 "Choose plugin to remove",
-                null,
                 plugs.map((plugin) => ({
                     id: plugin[0],
                     label: plugin[1].manifest.name,
@@ -57,7 +56,6 @@ export default [
 
             openPalette(
                 "Choose plugin to toggle",
-                null,
                 plugs.map((plugin) => ({
                     id: plugin[0],
                     label:
