@@ -2,7 +2,7 @@ import { persist, state } from "@cumcord/pluginData";
 import openPalette from "../components/Palette.jsx";
 
 const welcomeMsg =
-    "🎉 Welcome to **Command Palette**! 🎉 Start typing to pick an item from the list, or visit the API Docs to start building custom actions at https://yellowsink.github.io/cc-plugins/palette-docs";
+    "🎉 Welcome to **Command Palette**! 🎉 Start typing to pick an item from the list, or visit the API Docs to start building custom actions at https://yellowsink.github.io/discord-command-palette/docs";
 
 export default (defaultEntries) => {
     let keyHandler = (e) => {

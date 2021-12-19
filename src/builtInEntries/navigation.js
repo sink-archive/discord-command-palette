@@ -6,8 +6,8 @@ import { getGuildId } from "../permsHelper.js";
 const { getMembers } = findByProps("getMembers");
 const { getUser } = findByProps("getUser");
 const { openUserProfileModal } = findByProps("openUserProfileModal");
-const openUserSettings = find((m) => m?.default?.open).default.open;
-const { UserSettingsSections } = findByProps("UserSettingsSections");
+const openUserSettings = findByProps("submitComplete").open;
+const { getUserSettingsSections } = findByProps("getUserSettingsSections");
 
 const icon = "🚀";
 
@@ -67,10 +67,10 @@ export default [
         action: () => {
             openPalette(
                 "Which section to open?",
-                Object.values(UserSettingsSections).map((val) => ({
-                    id: val,
-                    label: val,
-                    action: () => openUserSettings(val),
+                Object.values(getUserSettingsSections("")).map((val) => ({
+                    id: val.section,
+                    label: val.label,
+                    action: () => openUserSettings(val.section),
                 }))
             );
         },
