@@ -5,7 +5,7 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/yellowsink/discord-command-palette)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/yellowsink/discord-command-palette/Build%20and%20deploy?label=deploy)
 ![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/yellowsink/discord-command-palette?label=codefactor)
-![GitHub](https://img.shields.io/github/license/yellowsink/discord-command-palette)
+![GitHub](https://img.shields.io/badge/license-BSD--3-informational)
 
 Power up your Discord with vscode's wonderful command palette for your client.
 
