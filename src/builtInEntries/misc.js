@@ -1,4 +1,5 @@
 import { findByProps } from "@cumcord/modules/webpack";
+import openAbout from "../components/AboutPalette.jsx";
 
 import { getGuildId } from "../permsHelper.js";
 const { updateChannelOverrideSettings } = findByProps(
@@ -37,4 +38,12 @@ export default [
             });
         },
     },
+    {
+        icon: "ℹ",
+        id: "misc_show_about",
+        label: "About Command Palette",
+        action: () => {
+            openAbout();
+        }
+    }
 ];

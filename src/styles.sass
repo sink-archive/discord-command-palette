@@ -115,3 +115,30 @@
     display: flex
     justify-content: center
     margin-top: 5em
+
+.ysink_palette_aboutcontainer
+    $iconsize: 15rem
+
+    display: flex
+    flex-flow: row nowrap
+    padding: 3rem
+    height: 30rem - (2 * 3rem)
+
+    .ysink_palette_abouticon
+        margin-right: 2rem
+        width: $iconsize
+        height: $iconsize
+
+    .ysink_palette_right_pane
+        display: flex
+        flex-flow: column nowrap
+        flex: 1
+        gap: 1rem
+
+        .ysink_palette_entrycount
+            font-size: 1.2rem
+            line-height: 1.2rem
+
+        .ysink_palette_warntext
+            color: var(--text-danger)
+            font-size: 1.1rem
