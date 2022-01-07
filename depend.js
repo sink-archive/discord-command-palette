@@ -9,10 +9,8 @@
 |  boilerplate, no need to change this  |
 \*=====================================*/
 import { loaded } from "@cumcord/plugins";
-import { SET } from "@cumcord/modules/internal/nests/Events";
 
 const commandPalettePluginIds = [
-    "https://yellowsink.github.io/cc-plugins/command-palette/",
     "https://yellowsink.github.io/discord-command-palette/",
     "https://cumcordplugins.github.io/Condom/yellowsink.github.io/discord-command-palette/",
 ];
@@ -28,11 +26,11 @@ export default () => {
     };
 
     if (window.commandPalette) unpatch = patch();
-    else loaded.on(SET, listener);
+    else loaded.on("SET", listener);
 
     return () => {
         unpatch?.();
-        loaded.off(SET, listener);
+        loaded.off("SET", listener);
     };
 };
 
