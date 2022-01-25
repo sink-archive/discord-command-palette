@@ -1,6 +1,6 @@
 // A patch to hide the name of cumcord to users of the plugin. May or may not be active.
 
-export default () => {
+module.exports = () => {
     if (!window.cumcord) {
         console.error("window.cumcord global not found, cannot sterilise.");
         return () => {};
