@@ -7,7 +7,7 @@ import PaletteMd from "./PaletteMd.jsx";
 import search from "../search.js";
 import showErrorModal from "./ErrorModal.jsx";
 
-const useState = React.useState;
+const { useState, useRef } = React;
 const { openModal } = findByProps("openModalLazy");
 const ModalComponents = findByProps("ModalCloseButton");
 const TextInput = findByDisplayName("TextInput");
@@ -15,12 +15,16 @@ const TextInput = findByDisplayName("TextInput");
 const Component = ({ e, prompt, rawEntries, closeAction, markdown }) => {
     let [searchterm, setSearchterm] = useState("");
     let [selected, setSelected] = useState(0);
+    const scrollContainerRef = useRef();
+    const paletteInputWrapperRef = useRef();
 
     let entries = [];
     try {
-        entries = search(rawEntries, persist.ghost.usageCounts, searchterm).filter(
-            (entry) => entry && (entry.condition?.() ?? true)
-        );
+        entries = search(
+            rawEntries,
+            persist.ghost.usageCounts,
+            searchterm
+        ).filter((entry) => entry && (entry.condition?.() ?? true));
     } catch (err) {
         setSearchterm("");
         showErrorModal(err);
@@ -59,15 +63,16 @@ const Component = ({ e, prompt, rawEntries, closeAction, markdown }) => {
                 break;
 
             default:
-                document
-                    .getElementsByClassName("ysink_palette_input")[0]
-                    .children[0].focus();
+                paletteInputWrapperRef.current.firstElementChild.firstChild.focus();
                 break;
         }
 
-        document
-            .getElementById(`palette_item_${selected}`)
-            ?.scrollIntoView(false);
+        const itemHeight = scrollContainerRef.current.firstChild.clientHeight;
+
+        scrollContainerRef.current.scroll({
+            behavior: "smooth",
+            top: itemHeight * Math.max(0, selected - 3),
+        });
     };
 
     if (e.transitionState == 3 && closeAction) closeAction();
@@ -82,7 +87,10 @@ const Component = ({ e, prompt, rawEntries, closeAction, markdown }) => {
                 <ModalComponents.ModalContent className="ysink_palette_palette">
                     {!markdown ? [] : <PaletteMd>{markdown}</PaletteMd>}
 
-                    <div className="ysink_palette_input_wrapper">
+                    <div
+                        className="ysink_palette_input_wrapper"
+                        ref={paletteInputWrapperRef}
+                    >
                         &gt;
                         <TextInput
                             className="ysink_palette_input"
@@ -93,7 +101,10 @@ const Component = ({ e, prompt, rawEntries, closeAction, markdown }) => {
                         />
                     </div>
 
-                    <div className="ysink_palette_scrollcontainer">
+                    <div
+                        className="ysink_palette_scrollcontainer"
+                        ref={scrollContainerRef}
+                    >
                         {entries.map((entry, index) => (
                             <PaletteItem
                                 entry={entry}
