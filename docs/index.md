@@ -6,8 +6,11 @@ Command Palette exposes an API globally designed to make it as easy as possible 
 and build custom pickers and text prompts.
 
 It attaches an object to window: _`window.commandPalette`_,
-and while testing for it should be fairly easy, it is preferable to use the provided code in
+and the preferred way to use it is via [cc-tools](https://npmjs.com/package/cumcord-tools)'s *Depend* tool.
+
+Run `npm i cumcord-tools` then see 
 [depend.js](https://github.com/yellowsink/discord-command-palette/blob/src-cumcord/depend.js)
+for an example.
 
 ## The type used for entries
 
