@@ -19,6 +19,7 @@ const Component = ({ e, prompt, rawEntries, closeAction, markdown }) => {
   const scrollContainerRef = useRef();
   const paletteInputWrapperRef = useRef();
 
+  // generate list of entries and also handle errors
   let entries = [];
   try {
     entries = search(rawEntries, persist.ghost.usageCounts, searchterm).filter(
@@ -29,14 +30,21 @@ const Component = ({ e, prompt, rawEntries, closeAction, markdown }) => {
     showErrorModal(err);
   }
 
+  // wrap selected index
+  if (entries.length !== 0) {
+    if (selected < 0) setSelected(entries.length - 1);
+    else if (selected > entries.length - 1) setSelected(0);
+  }
+
+  // function to call to close the palette, run action, etc
   const finish = () => {
     // close modal
     e.onClose();
     // increment usages count (helps with ranking entries)
-    let entry = entries[selected];
+    const entry = entries[selected];
     if (entry.id) {
-      let usages = persist.ghost.usageCounts;
-      let currentUsage = usages.get(entry.id) ?? 0;
+      const usages = persist.ghost.usageCounts;
+      const currentUsage = usages.get(entry.id) ?? 0;
       usages.set(entry.id, currentUsage + 1);
       persist.store.usageCounts = usages;
     }
@@ -45,22 +53,18 @@ const Component = ({ e, prompt, rawEntries, closeAction, markdown }) => {
     entry.action();
   };
 
+  // handles keypresses
   const keyHandler = (k) => {
     switch (k.code) {
       case "ArrowUp":
-        if (selected > 0) setSelected(selected - 1);
-        else setSelected(entries.length - 1);
+        setSelected(selected - 1);
         break;
-
       case "ArrowDown":
-        if (selected < entries.length - 1) setSelected(selected + 1);
-        else setSelected(0);
+        setSelected(selected + 1);
         break;
-
       case "Enter":
         finish();
         break;
-
       default:
         paletteInputWrapperRef.current.firstElementChild.firstChild.focus();
         break;

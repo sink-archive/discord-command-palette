@@ -57,7 +57,8 @@ export default [
         "Choose plugin to toggle",
         plugs.map((plugin) => ({
           id: plugin[0],
-          label: (plugin[1].enabled ? "🟢 " : "🔴 ") + plugin[1].manifest.name,
+          icon: plugin[1].enabled ? "🟢 " : "🔴 ",
+          label: plugin[1].manifest.name,
           action: () => plugins.togglePlugin(plugin[0]),
         }))
       );
