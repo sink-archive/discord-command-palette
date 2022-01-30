@@ -22,7 +22,7 @@ const Component = ({ e, prompt, rawEntries, closeAction, markdown }) => {
   let entries = [];
   try {
     entries = search(rawEntries, persist.ghost.usageCounts, searchterm).filter(
-      (entry) => entry && (entry.condition?.() ?? true)
+      (entry) => entry && (entry.condition ? entry.condition() : true)
     );
   } catch (err) {
     setSearchterm("");
