@@ -89,7 +89,7 @@ export default [
         "Which section to open?",
         Object.values(getGuildSettingsSections(getGuildId())).map((val) => ({
           id: val.section,
-          label: val.label,
+          label: val.ariaLabel ?? val.label,
           // ew setTimeout
           action: () => setTimeout(() => openGuildSettings(getGuildId(), val.section)),
         }))
