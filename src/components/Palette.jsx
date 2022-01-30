@@ -66,12 +66,14 @@ const Component = ({ e, prompt, rawEntries, closeAction, markdown }) => {
         break;
     }
 
-    const itemHeight = scrollContainerRef.current.firstChild.clientHeight;
+    if (scrollContainerRef.current.firstChild) {
+      const itemHeight = scrollContainerRef.current.firstChild.clientHeight;
 
-    scrollContainerRef.current.scroll({
-      behavior: "smooth",
-      top: itemHeight * Math.max(0, selected - 3),
-    });
+      scrollContainerRef.current.scroll({
+        behavior: "smooth",
+        top: itemHeight * Math.max(0, selected - 3),
+      });
+    }
   };
 
   if (e.transitionState == 3 && closeAction) closeAction();
