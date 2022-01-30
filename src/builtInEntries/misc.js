@@ -1,4 +1,5 @@
 import { findByProps } from "@cumcord/modules/webpack";
+import { getChannelId } from "@cumcord/modules/common/channels";
 import openAbout from "../components/AboutPalette.jsx";
 
 import { getGuildId } from "../permsHelper.js";
@@ -6,7 +7,6 @@ const { updateChannelOverrideSettings } = findByProps(
   "updateChannelOverrideSettings"
 );
 const { getCurrentChannelSettings } = findByProps("getCurrentChannelSettings");
-const { getChannelId } = findByProps("getChannelId", "getVoiceChannelId");
 const { updateGuildNotificationSettings } = findByProps(
   "updateGuildNotificationSettings"
 );

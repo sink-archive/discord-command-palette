@@ -8,6 +8,10 @@ const { getUser } = findByProps("getUser");
 const { openUserProfileModal } = findByProps("openUserProfileModal");
 const openUserSettings = findByProps("submitComplete").open;
 const { getUserSettingsSections } = findByProps("getUserSettingsSections");
+import {
+  getGuildSettingsSections,
+  openGuildSettings,
+} from "../getGuildSettingsSections";
 
 const icon = "🚀";
 
@@ -71,6 +75,23 @@ export default [
           id: val.section,
           label: val.label,
           action: () => openUserSettings(val.section),
+        }))
+      );
+    },
+  },
+  {
+    icon,
+    id: "navigate_guild_settings",
+    label: "Open guild settings",
+    condition: getGuildId,
+    action: () => {
+      openPalette(
+        "Which section to open?",
+        Object.values(getGuildSettingsSections(getGuildId())).map((val) => ({
+          id: val.section,
+          label: val.label,
+          // ew setTimeout
+          action: () => setTimeout(() => openGuildSettings(getGuildId(), val.section)),
         }))
       );
     },
