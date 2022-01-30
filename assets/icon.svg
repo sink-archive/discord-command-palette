@@ -28,7 +28,7 @@
      inkscape:document-units="px"
      showgrid="false"
      inkscape:zoom="1.21875"
-     inkscape:cx="160"
+     inkscape:cx="160.41026"
      inkscape:cy="212.10256"
      inkscape:window-width="1900"
      inkscape:window-height="1040"
@@ -38,6 +38,23 @@
      inkscape:current-layer="layer1" />
   <defs
      id="defs2">
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect939"
+       is_visible="true"
+       lpeversion="1"
+       satellites_param="F,0,0,1,0,50,0,1 @ F,0,0,1,0,50,0,1 @ F,0,0,1,0,50,0,1 @ F,0,0,1,0,50,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="50"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient1270">
@@ -125,7 +142,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <rect
+    <path
        style="fill:url(#linearGradient1131);fill-opacity:1"
        id="rect31"
        width="512"
@@ -133,7 +150,10 @@
        x="0"
        y="0"
        rx="0"
-       ry="50.322968" />
+       ry="0"
+       inkscape:path-effect="#path-effect939"
+       d="m 50,0 h 412 a 50,50 45 0 1 50,50 v 412 a 50,50 135 0 1 -50,50 H 50 A 50,50 45 0 1 0,462 V 50 A 50,50 135 0 1 50,0 Z"
+       sodipodi:type="rect" />
     <g
        aria-label="&gt;"
        id="text3967"
