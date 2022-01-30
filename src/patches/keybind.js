@@ -14,7 +14,7 @@ export default (defaultEntries) => {
     let correctBind =
       (e.ctrlKey || e.metaKey) == bind.ctrlMeta &&
       e.shiftKey == bind.shift &&
-      e.which == bind.code;
+      e.code == bind.code;
 
     if (correctBind) {
       let md = persist.ghost.firstRun !== false ? welcomeMsg : null;

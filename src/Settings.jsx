@@ -6,9 +6,11 @@ import { useNest } from "@cumcord/utils";
 const FormText = findByDisplayName("FormText");
 const Button = findByProps("Sizes", "Colors", "Looks", "DropdownSizes");
 
+const KeybindRecorder = findByDisplayName("KeybindRecorder");
+
 const eventListenerPatch = () => {
   const keyHandler = (e) => {
-    persist.store.keyBind.code = e.which;
+    persist.store.keyBind.code = e.code;
     state.store.pickingBind = false;
   };
 
@@ -30,7 +32,10 @@ export default () => {
     <div className="ysink_palette_settings_container">
       <div className="ysink_palette_settings">
         <FormText className="ysink_palette_slabel">
-          Keycode: {String.fromCharCode(persist.ghost.keyBind.code)}
+          Keycode:{" "}
+          {persist.ghost.keyBind.code.startsWith("Key")
+            ? persist.ghost.keyBind.code.substring(3)
+            : persist.ghost.keyBind.code}
         </FormText>
 
         <Button
@@ -41,13 +46,17 @@ export default () => {
           }
           look={Button.Looks.OUTLINED}
           onClick={() => (state.store.pickingBind = !state.ghost.pickingBind)}
-          onBlur={
-            /* stop clueless idiots leaving the bind chooser on */
-            () => (state.store.pickingBind = false)
-          }
+          onBlur={() => (state.store.pickingBind = false)}
         >
           {state.ghost.pickingBind ? "Cancel" : "Change"}
         </Button>
+
+        <FormText className="ysink_palette_sdesc">
+          This is the physical location of the key on your keyboard.
+          <br />
+          If you use an alternate layout such as Dvorak, Colemak, Workman, etc,
+          this will be wrong.
+        </FormText>
 
         <FormText className="ysink_palette_slabel">Shift</FormText>
         <input

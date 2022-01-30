@@ -15,7 +15,7 @@ export default ({ persist, id }) => {
     persist.store.keyBind = {
       ctrlMeta: true,
       shift: true,
-      code: 80,
+      code: "KeyP",
     };
 
   if (!(persist.ghost.usageCounts instanceof Map))
