@@ -40,6 +40,28 @@ const Component = ({ e, prompt, rawEntries, closeAction, markdown }) => {
   const finish = () => {
     // close modal
     e.onClose();
+    
+    // easter egg!
+    if (searchterm === "cum://cord") {
+      const iframe = document.createElement("iframe");
+      iframe.src = "https://rentry.co/cumcord_manifesto";
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.filter = "invert(1)"
+      
+      const notice = document.createElement("div");
+      notice.style.textAlign = "center";
+      notice.style.color = "white";
+      notice.style.padding = "2rem"
+      notice.textContent = "You have to reload your discord. lol."
+
+      document.body = document.createElement("body");
+      document.body.appendChild(notice);
+      document.body.appendChild(iframe);
+      
+      return;
+    }
+    
     // increment usages count (helps with ranking entries)
     const entry = entries[selected];
     if (entry.id) {
