@@ -1,5 +1,6 @@
 import { findByProps, findByDisplayName } from "@cumcord/modules/webpack";
 import { ErrorBoundary } from "@cumcord/ui/components";
+import DiskaiShim from "./DiskaiShim.jsx";
 import PaletteItem from "./PaletteItem.jsx";
 import PaletteMd from "./PaletteMd.jsx";
 
@@ -13,6 +14,7 @@ const Component = ({ e, prompt, finishAction, closeAction, markdown }) => {
 
     return (
         <ErrorBoundary>
+            <DiskaiShim />
             <ModalComponents.ModalRoot
                 transitionState={e.transitionState}
                 size="small"

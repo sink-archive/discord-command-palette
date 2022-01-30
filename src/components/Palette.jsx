@@ -6,6 +6,7 @@ import PaletteItem from "./PaletteItem.jsx";
 import PaletteMd from "./PaletteMd.jsx";
 import search from "../search.js";
 import showErrorModal from "./ErrorModal.jsx";
+import DiskaiShim from "./DiskaiShim.jsx";
 
 const { useState, useRef } = React;
 const { openModal } = findByProps("openModalLazy");
@@ -78,6 +79,7 @@ const Component = ({ e, prompt, rawEntries, closeAction, markdown }) => {
     if (e.transitionState == 3 && closeAction) closeAction();
     return (
         <ErrorBoundary>
+            <DiskaiShim />
             <ModalComponents.ModalRoot
                 transitionState={e.transitionState}
                 size="small"

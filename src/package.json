@@ -1,5 +1,8 @@
 {
 	"dependencies": {
 		"fuse.js": "^6.4.6"
+	},
+	"devDependencies": {
+		"@rollup/plugin-image": "^2.1.1"
 	}
 }
