@@ -1,25 +1,25 @@
 import Fuse from "fuse.js";
 
 const errorHandle = (set) => {
-    let noId = set.filter((entry) => !entry.id);
-    let [noIdCustom, noIdBuiltIn] = noId.reduce(
-        (result, element) => {
-            if (element.source != "Built In") result[0].push(element);
-            else result[1].push(element);
-            return result;
-        },
-        [[], []]
-    );
+  let noId = set.filter((entry) => !entry.id);
+  let [noIdCustom, noIdBuiltIn] = noId.reduce(
+    (result, element) => {
+      if (element.source != "Built In") result[0].push(element);
+      else result[1].push(element);
+      return result;
+    },
+    [[], []]
+  );
 
-    if (noIdBuiltIn.length != 0)
-        throw `One or more built-in entries had no ID. Please ping Yellowsink constantly with this:
+  if (noIdBuiltIn.length != 0)
+    throw `One or more built-in entries had no ID. Please ping Yellowsink constantly with this:
 
 \`\`\`
 ${noIdBuiltIn.map((e) => e.label).join("\n")}
 \`\`\``;
 
-    if (noIdCustom.length != 0)
-        throw `One or more custom entries had no ID. Please disable the following entry sources:
+  if (noIdCustom.length != 0)
+    throw `One or more custom entries had no ID. Please disable the following entry sources:
 
 \`\`\`
 ${noIdCustom.map((e) => e.source).join("\n")}
@@ -33,43 +33,43 @@ ${noIdCustom.map((e) => e.label).join("\n")}
 };
 
 const rankResults = (set, usageCounts) => {
-    let remaining = set.slice();
-    let working = [];
+  let remaining = set.slice();
+  let working = [];
 
-    // add all with usage counts
-    usageCounts.forEach((count, id) => {
-        let index = remaining.findIndex((entry) => entry.id == id);
-        if (index == -1) return;
+  // add all with usage counts
+  usageCounts.forEach((count, id) => {
+    let index = remaining.findIndex((entry) => entry.id == id);
+    if (index == -1) return;
 
-        working.push([remaining[index], count]);
-        remaining.splice(index, 1);
-    });
+    working.push([remaining[index], count]);
+    remaining.splice(index, 1);
+  });
 
-    // sort by count and remove now useless count
-    working = working.sort((a, b) => b[1] - a[1]).map((n) => n[0]);
+  // sort by count and remove now useless count
+  working = working.sort((a, b) => b[1] - a[1]).map((n) => n[0]);
 
-    // add rest of set on the end
-    return working.concat(remaining);
+  // add rest of set on the end
+  return working.concat(remaining);
 };
 
 const filter = (set, searchTerm) => {
-    errorHandle(set);
+  errorHandle(set);
 
-    const fuseOptions = {
-        threshold: 0.5,
-        useExtendedSearch: true,
-        keys: ["label", "id"],
-    };
+  const fuseOptions = {
+    threshold: 0.5,
+    useExtendedSearch: true,
+    keys: ["label", "id"],
+  };
 
-    return new Fuse(set, fuseOptions)
-        .search(searchTerm)
-        .map((searchResult) => searchResult.item);
+  return new Fuse(set, fuseOptions)
+    .search(searchTerm)
+    .map((searchResult) => searchResult.item);
 };
 
 export default (set, usageCounts, searchTerm) => {
-    if (!searchTerm || searchTerm == "") return rankResults(set, usageCounts);
+  if (!searchTerm || searchTerm == "") return rankResults(set, usageCounts);
 
-    let matches = filter(set, searchTerm);
+  let matches = filter(set, searchTerm);
 
-    return rankResults(matches, usageCounts);
+  return rankResults(matches, usageCounts);
 };
