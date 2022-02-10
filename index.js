@@ -1,4 +1,4 @@
-const { Plugin } = require("powercord/entries");
+const { Plugin } = require("@vizality/entities");
 const sterilise = require("./src/sterilise");
 
 const PLUGIN_URL = "https://yellowsink.github.io/discord-command-palette/";
@@ -12,7 +12,7 @@ module.exports = class CommandPalette extends Plugin {
         this.unSterilise = null;
     }
 
-    async startPlugin() {
+    async start() {
         this.unloadCcAfter = !window.cumcord;
 
         if (!window.cumcord) eval(await (await fetch(CC_URL)).text());
@@ -38,7 +38,7 @@ module.exports = class CommandPalette extends Plugin {
         }
     }
 
-    pluginWillUnload() {
+    stop() {
         if (this.unloadCcAfter) {
             cumcord.uninject();
         } else if (this.disablePluginAfter) {
