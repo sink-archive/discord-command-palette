@@ -37,14 +37,14 @@ NOTE THIS PLUGIN IS IN ALPHA STATE CURRENTLY
 <!-- </details> -->
 
 ### Powercord installation
-```
+```sh
 cd powercord/src/Powercord/plugins
 git clone https://github.com/yellowsink/discord-command-palette -b src-pc
 ```
 
 ### Vizality installation
-```
-cd powercord/src/Powercord/plugins
+```sh
+cd vizality/addons/plugins
 git clone https://github.com/yellowsink/discord-command-palette -b src-vz
 ```
 
