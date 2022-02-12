@@ -30,11 +30,23 @@ NOTE THIS PLUGIN IS IN ALPHA STATE CURRENTLY
  1. Install [Cumcord](https://cumcord.com/#install)
  2. Click this button:
 
-<!-- <a target="_blank" href="https://send.cumcord.com/#https://cumcordplugins.github.io/Condom/yellowsink.github.io/discord-command-palette"><img height="50" src="https://yellowsink.github.io/cc-plugins/assets/condom_button.png" /></a>
+<!-- <a target="_blank" href="https://send.cumcord.com/#https://cumcordplugins.github.io/Condom/yellowsink.github.io/discord-command-palette"><img height="50" src="https://raw.githubusercontent.com/Cumcord/assets/main/buttons/condom_button.png" /></a>
 
 <details><summary>Install from source</summary> -->
-<a target="_blank" href="https://send.cumcord.com/#https://yellowsink.github.io/discord-command-palette"><img height="50" src="https://yellowsink.github.io/cc-plugins/assets/cumdump_button.png" /></a>
+<a target="_blank" href="https://send.cumcord.com/#https://yellowsink.github.io/discord-command-palette"><img height="50" src="https://raw.githubusercontent.com/Cumcord/assets/main/buttons/cumdump_button.png" /></a>
 <!-- </details> -->
+
+### Powercord installation
+```
+cd powercord/src/Powercord/plugins
+git clone https://github.com/yellowsink/discord-command-palette -b src-pc
+```
+
+### Vizality installation
+```
+cd powercord/src/Powercord/plugins
+git clone https://github.com/yellowsink/discord-command-palette -b src-vz
+```
 
 ## TODOs
 
