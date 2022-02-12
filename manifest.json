@@ -1,10 +1,7 @@
 {
     "name": "Command Palette",
     "description": "Like vscode's command palette? Well now it's in Discord too!!!",
-    "author": {
-        "name": "Yellowsink#8156",
-        "id": "435026627907420161"
-    },
+    "author": "Yellowsink#8156",
     "version": "1.0.0",
     "license": "BSD-3"
 }

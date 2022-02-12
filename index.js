@@ -1,8 +1,13 @@
-const { Plugin } = require("powercord/entries");
+const { Plugin } = require("powercord/entities");
 const sterilise = require("./src/sterilise");
 
 const PLUGIN_URL = "https://yellowsink.github.io/discord-command-palette/";
 const CC_URL = "https://raw.githubusercontent.com/Cumcord/builds/main/build.js";
+
+const pluginIsInstalled = () =>
+    window.cumcord?.plugins.installed.ghost[PLUGIN_URL];
+const pluginIsEnabled = () =>
+    window.cumcord?.plugins.installed.ghost[PLUGIN_URL]?.enabled;
 
 module.exports = class CommandPalette extends Plugin {
     constructor() {
@@ -16,8 +21,8 @@ module.exports = class CommandPalette extends Plugin {
         this.unloadCcAfter = !window.cumcord;
 
         if (!window.cumcord) eval(await (await fetch(CC_URL)).text());
-        // wait for cumcord to complete its initialisation
-        // if already loaded, this will do nothing.
+
+        // wait for cumcord to fully load
         await cumcord.cum();
 
         this.unSterilise = sterilise();
@@ -25,24 +30,24 @@ module.exports = class CommandPalette extends Plugin {
         // load plugins and set state accordingly
         // unloadCcAfter - if we inject cumcord, remove after
         // disablePluginAfter - if we enable / install the plugin, disable after in the event we leave cc
-        if (cumcord.plugins.installed.ghost.hasOwnProperty(PLUGIN_URL)) {
-            this.disablePluginAfter = false;
+        this.disablePluginAfter = false;
 
-            if (!cumcord.plugins.loaded.ghost.hasOwnProperty(PLUGIN_URL)) {
-                cumcord.plugins.togglePlugin(PLUGIN_URL);
-                this.disablePluginAfter = true;
-            }
-        } else {
+        if (!pluginIsInstalled()) {
             this.disablePluginAfter = true;
             await cumcord.plugins.importPlugin(PLUGIN_URL);
+        }
+
+        if (!pluginIsEnabled()) {
+            cumcord.plugins.togglePlugin(PLUGIN_URL);
+            this.disablePluginAfter = true;
         }
     }
 
     pluginWillUnload() {
         if (this.unloadCcAfter) {
-            cumcord.uninject();
+            window.cumcord?.uninject();
         } else if (this.disablePluginAfter) {
-            cumcord.plugins.togglePlugin(PLUGIN_URL);
+            window.cumcord?.plugins.togglePlugin(PLUGIN_URL);
         }
 
         this.unSterilise?.();
