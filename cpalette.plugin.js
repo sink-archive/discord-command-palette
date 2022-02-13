@@ -2,7 +2,7 @@
  * @name CommandPalette
  * @author Yellowsink
  * @version 1.0.0
- * @description ye
+ * @description its like command palette but you have to put up with bd plugin development to use it
  * @source https://github.com/yellowsink/discord-command-palette/blob/src-bd/cpalette.plugin.js
  * @updateUrl https://raw.githubusercontent.com/yellowsink/discord-command-palette/src-bd/cpalette.plugin.js
  */
@@ -115,7 +115,7 @@ let disablePluginAfter = false;
 let unSterilise;
 
 module.exports = class {
-   async function start() {
+   async start() {
     debugger
     unloadCcAfter = !window.cumcord;
 
