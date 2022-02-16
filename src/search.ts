@@ -1,6 +1,7 @@
 import Fuse from "fuse.js";
+import { Entry, UsageCounts } from "./types";
 
-const errorHandle = (set) => {
+const errorHandle = (set: Entry[]) => {
   let noId = set.filter((entry) => !entry.id);
   let [noIdCustom, noIdBuiltIn] = noId.reduce(
     (result, element) => {
@@ -32,9 +33,9 @@ ${noIdCustom.map((e) => e.label).join("\n")}
 \`\`\``;
 };
 
-const rankResults = (set, usageCounts) => {
+const rankResults = (set: Entry[], usageCounts: UsageCounts) => {
   let remaining = set.slice();
-  let working = [];
+  let working: [Entry, number][] = [];
 
   // add all with usage counts
   usageCounts.forEach((count, id) => {
@@ -45,14 +46,14 @@ const rankResults = (set, usageCounts) => {
     remaining.splice(index, 1);
   });
 
-  // sort by count and remove now useless count
-  working = working.sort((a, b) => b[1] - a[1]).map((n) => n[0]);
+  // sort by count
+  working = working.sort((a, b) => b[1] - a[1]);
 
-  // add rest of set on the end
-  return working.concat(remaining);
+  // remove now useless count and add rest of set on the end
+  return working.map((n) => n[0]).concat(remaining);
 };
 
-const filter = (set, searchTerm) => {
+const filter = (set: Entry[], searchTerm: string) => {
   errorHandle(set);
 
   const fuseOptions = {
@@ -66,7 +67,7 @@ const filter = (set, searchTerm) => {
     .map((searchResult) => searchResult.item);
 };
 
-export default (set, usageCounts, searchTerm) => {
+export default (set: Entry[], usageCounts: UsageCounts, searchTerm: string) => {
   if (!searchTerm || searchTerm == "") return rankResults(set, usageCounts);
 
   let matches = filter(set, searchTerm);

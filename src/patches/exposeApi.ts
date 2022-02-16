@@ -6,8 +6,10 @@ import {
   openTextEntry,
   openTextEntryPromise,
 } from "../components/TextEntryPalette.jsx";
+import { Entry } from "../types.js";
 
 export default () => {
+  // @ts-expect-error
   window.commandPalette = {
     openPalette,
 
@@ -16,7 +18,9 @@ export default () => {
     openTextEntry,
     openTextEntryAsync: openTextEntryPromise,
 
-    registerEntry({ source, id, label, icon, action, condition }) {
+    registerEntry(entry: Entry) {
+      const { source, id, label, icon, action, condition } = entry;
+
       // make sure people supply all required items
       if (!id || id == "")
         throw "Register failed: Please supply an ID (string) for your entry";
@@ -32,26 +36,19 @@ export default () => {
       // don't let people take existing IDs
       if (builtInEntries.find((e) => e.id == id) != undefined)
         throw "Register failed: Entry ID taken by a built in entry";
-      let index = state.ghost.customEntries.findIndex((e) => e.id == id);
+      let index = state.ghost.customEntries.findIndex((e: Entry) => e.id == id);
       if (index != -1)
         throw `Register failed: Entry ID taken by entry from source ${state.ghost.customEntries[index].source}`;
 
-      state.ghost.customEntries.push({
-        id,
-        source,
-        label,
-        action,
-        icon,
-        console,
-      });
+      state.ghost.customEntries.push(entry);
     },
 
-    unregisterEntry(id) {
+    unregisterEntry(id: string) {
       // make sure people supply all required items
       if (!id || id == "")
         throw "Unregister failed: Please supply an ID (string) to deregister";
 
-      let entries = state.ghost.customEntries;
+      let entries: Entry[] = state.ghost.customEntries;
       let index = entries.findIndex((e) => e.id == id);
       if (index == -1)
         throw "Unregister failed: No entry with that ID could be found";
@@ -62,8 +59,8 @@ export default () => {
       return removedEntry;
     },
 
-    unregisterSource(source) {
-      let entries = state.ghost.customEntries;
+    unregisterSource(source: string) {
+      let entries: Entry[] = state.ghost.customEntries;
       let notSourceEntries = entries.filter((e) => e.source != source);
       if (notSourceEntries.length == entries.length) return undefined;
       state.store.customEntries = notSourceEntries;
@@ -76,7 +73,9 @@ export default () => {
   log("|| COMMAND PALETTE || Initialised window.commandPalette API");
 
   return () => {
+    // @ts-expect-error
     window.commandPalette = undefined;
+    // @ts-expect-error
     delete window.commandPalette;
     log("|| COMMAND PALETTE || Disposed window.commandPalette API");
   };

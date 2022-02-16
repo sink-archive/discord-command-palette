@@ -1,31 +1,33 @@
+import React from "react"; // sperm will make this resolve to cumcord's React
+
 import { persist, state } from "@cumcord/pluginData";
 
 import { findByDisplayName, findByProps } from "@cumcord/modules/webpack";
 import { useNest } from "@cumcord/utils";
 
 const FormText = findByDisplayName("FormText");
-const Button = findByProps("Sizes", "Colors", "Looks", "DropdownSizes");
-
-const KeybindRecorder = findByDisplayName("KeybindRecorder");
+const Button: any = findByProps("Sizes", "Colors", "Looks", "DropdownSizes");
 
 const eventListenerPatch = () => {
-  const keyHandler = (e) => {
+  const keyHandler = (e: KeyboardEvent) => {
     persist.store.keyBind.code = e.code;
     state.store.pickingBind = false;
   };
 
   document.addEventListener("keyup", keyHandler, { once: true });
   return () =>
-    document.removeEventListener("keyup", keyHandler, { once: true });
+    document.removeEventListener("keyup", keyHandler, {
+      once: true,
+    } as AddEventListenerOptions);
 };
 
 export default () => {
   useNest(state);
   useNest(persist);
 
-  let removeEvent = React.useRef();
+  let removeEvent = React.useRef(() => {});
 
-  removeEvent.current?.();
+  removeEvent.current();
   if (state.ghost.pickingBind) removeEvent.current = eventListenerPatch();
 
   return (

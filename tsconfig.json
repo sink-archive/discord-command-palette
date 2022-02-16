@@ -1,0 +1,12 @@
+{
+  "include": ["src/**/*.ts", "defs/*.d.ts"],
+  "compilerOptions": {
+    "target": "ESNext",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "declaration": false,
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve"
+  }
+}

@@ -1,11 +1,12 @@
 import { findByProps } from "@cumcord/modules/webpack";
+import { SourceLessEntry } from "../types";
 
 /* const { acceptInviteAndTransitionToInviteChannel } =
   findByProps("resolveInvite"); */
 
 const icon = "🛡";
 
-export default [
+const entries: SourceLessEntry[] = [
   {
     icon,
     label: "Join Guild",
@@ -13,14 +14,17 @@ export default [
     action: async () => {
       let invite;
       try {
+        // @ts-expect-error
         invite = await commandPalette.openTextEntryAsync("Enter an invite");
       } catch {
         return;
       }
       // i have to module find here and i have no idea why. How wonderful.
-      await findByProps(
-        "resolveInvite"
+      await (
+        findByProps("resolveInvite") as any
       ).acceptInviteAndTransitionToInviteChannel(invite);
     },
   },
 ];
+
+export default entries;

@@ -4,10 +4,11 @@ import { showConfirmationModal } from "@cumcord/ui/modals";
 import { uninject, dev } from "@cumcord";
 import textEntry from "../components/TextEntryPalette.jsx";
 import openPalette from "../components/Palette.jsx";
+import { SourceLessEntry } from "../types.js";
 
 const icon = "💧";
 
-export default [
+const entries: SourceLessEntry[] = [
   {
     icon,
     id: "cumcord_installplug",
@@ -18,7 +19,7 @@ export default [
         await plugins.importPlugin(url);
         showToast({
           title: "Installed plugin",
-          duration: 3000,
+          duration: 3000
         });
       } catch {}
     },
@@ -88,7 +89,9 @@ export default [
     icon,
     id: "cumcord_toggle_dev",
     label: "Toggle DevMode",
-    condition: () => dev,
+    condition: () => !!dev,
     action: dev?.toggleDevMode,
   },
 ];
+
+export default entries;
